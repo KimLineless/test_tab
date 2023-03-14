@@ -809,13 +809,3 @@ const [server,setServer] = useState([])
 }
 
 export default App;
-
-// edge.map(function(a,i){
-//   return(
-// <tr key={i}>
-//   <td>{i+1}</td>
-//   <td>{i+1}</td>
-//   <td>{a.edge_name}</td>
-// </tr>
-//   )
-// })
