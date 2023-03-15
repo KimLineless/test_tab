@@ -49,14 +49,14 @@ const [name , setName] = useState([])
     }
   ]
 
-  const edge2= [1]
-  const server2= [1,2]
-  const switch2= [1,2,3]
-  const sensor2= [1,2,3,4,5,6,7,8,9]
+  // const edge2= [1]
+  // const server2= [1,2]
+  // const switch2= [1,2,3]
+  // const sensor2= [1,2,3,4,5,6,7,8,9]
   
   const TopTable = (
     
-    <Table striped bordered hover>
+    <Table striped bordered hover  onClick={(e)=>{console.log(e.target.innerHTML)}}>
       <thead>
         <tr>
           <th>순번</th>
@@ -66,215 +66,56 @@ const [name , setName] = useState([])
       </thead>
       <tbody>
       {
-        title === "센터" && name === "전체"?edge.map(function(a,i){
+        title === "센터"?edge.map(function(a,i){
           return(
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{i+1}</td>
-          <td>{a?.edge_name}</td>
-        </tr>
+            <tr key={i}>
+              <td>{i+1}</td>
+              <td>{i+1}</td>
+              <td>{a?.edge_name}</td>
+            </tr>
           )
-        }):title ==="센터" && name === "곤지암 엣지센터"?edge2.map(function(a,i){
+        }):title === "서버"?server.map(function(a,i){
           return(
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{i+1}</td>
-          <td>{edge[0]?.edge_name}</td>
-        </tr>
+            <tr key={i}>
+              <td>{i+1}</td>
+              <td>{i+1}</td>
+              <td>{a?.facil_name}</td>
+            </tr>
           )
-        }):title ==="센터" && name === "엣지2"?edge2.map(function(a,i){
+        }):title === "스위치"?net.map(function(a,i){
           return(
-        <tr key={i}>
-          <td>{i+2}</td>
-          <td>{i+2}</td>
-          <td>{edge[1]?.edge_name}</td>
-        </tr>
+            <tr key={i}>
+              <td>{i+1}</td>
+              <td>{i+1}</td>
+              <td>{a?.facil_name}</td>
+            </tr>
           )
-        }):title ==="센터" && name === "엣지3"?edge2.map(function(a,i){
+        }):title === "라우터"?rou.map(function(a,i){
           return(
-        <tr key={i}>
-          <td>{i+3}</td>
-          <td>{i+3}</td>
-          <td>{edge[2]?.edge_name}</td>
-        </tr>
+            <tr key={i}>
+              <td>{i+1}</td>
+              <td>{i+1}</td>
+              <td>{a?.facil_name}</td>
+            </tr>
           )
-        }):title === "센터"?edge.map(function(a,i){
+        }):title === "센서"?sensor.map(function(a,i){
           return(
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{i+1}</td>
-          <td>{a?.edge_name}</td>
-        </tr>
-          )
-        }):title ==="서버" && name === "전체"?server.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{i+1}</td>
-          <td>{a.facil_name}</td>
-        </tr>
-          )
-        }):title ==="서버" && name === "곤지암 엣지센터"?server2.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{i+1}</td>
-          <td>{server[i].facil_name}</td>
-        </tr>
-          )
-        }):title ==="서버" && name === "엣지2"?server2.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+3}</td>
-          <td>{i+3}</td>
-          <td>{server[i+2].facil_name}</td>
-        </tr>
-          )
-        }):title ==="서버" && name === "엣지3"?server2.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+5}</td>
-          <td>{i+5}</td>
-          <td>{server[i+4].facil_name}</td>
-        </tr>
-          )
-        }):title ==="서버"?server.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{i+1}</td>
-          <td>{a.facil_name}</td>
-        </tr>
-          )
-        }):title ==="스위치" && name === "전체"?net.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{i+1}</td>
-          <td>{a.facil_name}</td>
-        </tr>
-          )
-        }):title ==="스위치" && name === "곤지암 엣지센터"?switch2.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{i+1}</td>
-          <td>{net[i].facil_name}</td>
-        </tr>
-          )
-        }):title ==="스위치" && name === "엣지2"?switch2.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+4}</td>
-          <td>{i+4}</td>
-          <td>{net[i+3].facil_name}</td>
-        </tr>
-          )
-        }):title ==="스위치" && name === "엣지3"?switch2.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+7}</td>
-          <td>{i+7}</td>
-          <td>{net[i+6].facil_name}</td>
-        </tr>
-          )
-        }):title ==="스위치"?net.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{i+1}</td>
-          <td>{a.facil_name}</td>
-        </tr>
-          )
-        }):title ==="라우터" && name === "전체"?rou.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{i+1}</td>
-          <td>{a.facil_name}</td>
-        </tr>
-          )
-        }):title ==="라우터" && name === "곤지암 엣지센터"?switch2.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i}</td>
-          <td>{i}</td>
-          <td>{rou[i].facil_name}</td>
-        </tr>
-          )
-        }):title ==="라우터" && name === "엣지2"?switch2.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+4}</td>
-          <td>{i+4}</td>
-          <td>{rou[i+3].facil_name}</td>
-        </tr>
-          )
-        }):title ==="라우터" && name === "엣지3"?switch2.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+7}</td>
-          <td>{i+7}</td>
-          <td>{rou[i+6].facil_name}</td>
-        </tr>
-          )
-        }):title ==="라우터"?rou.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{i+1}</td>
-          <td>{a.facil_name}</td>
-        </tr>
-          )
-        }):title ==="센서" && name === "전체"?sensor.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{i+1}</td>
-          <td>{a.facil_name}</td>
-        </tr>
-          )
-        }):title ==="센서" && name === "곤지암 엣지센터"?sensor2.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{i+1}</td>
-          <td>{sensor[i].facil_name}</td>
-        </tr>
-          )
-        }):title ==="센서" && name === "엣지2"?sensor2.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+10}</td>
-          <td>{i+10}</td>
-          <td>{sensor[i+9].facil_name}</td>
-        </tr>
-          )
-        }):title ==="센서" && name === "엣지3"?sensor2.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+19}</td>
-          <td>{i+19}</td>
-          <td>{sensor[i+8].facil_name}</td>
-        </tr>
-          )
-        }):title ==="센서"?sensor.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{i+1}</td>
-          <td>{a.facil_name}</td>
-        </tr>
+            <tr key={i}>
+              <td>{i+1}</td>
+              <td>{i+1}</td>
+              <td>{a?.facil_name}</td>
+            </tr>
           )
         }):edge.map(function(a,i){
-  return(
-<tr key={i}>
-  <td>{i+1}</td>
-  <td>{i+1}</td>
-  <td>{a.edge_name}</td>
-</tr>
-  )
-})}
+          return(
+            <tr key={i}>
+              <td>{i+1}</td>
+              <td>{i+1}</td>
+              <td>{a?.edge_name}</td>
+            </tr>
+          )
+        })
+      }
       </tbody>
     </Table>
   )
@@ -294,7 +135,6 @@ const [name , setName] = useState([])
           return(
         <tr key={k}>
           <td>{rouBot.title[k]}</td>
-          {/* <td>{rouBot.{`rou${k+1}`[k]}}</td> */}
           <td>{rouBot.rou1[k]}</td>
         </tr>
           )
@@ -304,41 +144,21 @@ const [name , setName] = useState([])
   )
 
 const innerTabClick = (e) => {
-  console.log(e.target.innerHTML,"2222222222")
+  console.log(e.target.innerHTML)
   setName(e.target.innerHTML)
 }
 
 const tableTabClick = (e) => {
-  console.log(e.target.innerHTML,"11111111111")
+  console.log(e.target.innerHTML)
   setTitle(e.target.innerHTML)
 }
 
 const tabList = [
-  {
-    value : "center", 
-    title : "센터"
-
-  },
-  {
-    value : "server", 
-    title : "서버"
-
-  },
-  {
-    value : "switch", 
-    title : "스위치"
-
-  },
-  {
-    value : "router", 
-    title : "라우터"
-
-  },
-  {
-    value : "sensor", 
-    title : "센서"
-
-  }
+  { value : "center", title : "센터"},
+  { value : "server", title : "서버"},
+  { value : "switch", title : "스위치"},
+  { value : "router", title : "라우터"},
+  { value : "sensor", title : "센서"}
 ]
   // 시설정보 tab01 
   return (
