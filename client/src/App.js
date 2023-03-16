@@ -1,62 +1,74 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import React, {  useEffect, useState } from "react"
-import './App.css';
-import { Tab,Tabs,Table } from 'react-bootstrap';
-import Axios from "axios"
-import {rouBot} from './TableBotData';
+import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import { Tab, Tabs, Table } from "react-bootstrap";
+import Axios from "axios";
 
 function App() {
-
-const [edge,setEdge] = useState([])
-const [net,setNet] = useState([])
-const [rou,setRou] = useState([])
-const [sensor,setSensor] = useState([])
-const [server,setServer] = useState([])
-const [title ,setTitle] = useState([])
-const [name , setName] = useState([])
+  const [edge, setEdge] = useState([]);
+  const [net, setNet] = useState([]);
+  const [rou, setRou] = useState([]);
+  const [sensor, setSensor] = useState([]);
+  const [server, setServer] = useState([]);
+  const [title, setTitle] = useState([]);
+  const [name, setName] = useState([]);
+  // const [edgeId, setEdgeId] = useState(1);
 
   useEffect(() => {
     Axios.get("/api/allFacilInfo")
-  .then((res) => {
-    if (res.status === 200) {
-      console.log(res.data)
-      setEdge(res.data?.edgeInfo)
-      setNet(res.data?.networkInfo)
-      setRou(res.data?.routerInfo)
-      setSensor(res.data?.sensorInfo)
-      setServer(res.data?.serverInfo)
-    }
-  
-  }).catch ((e) => {
-    console.log(e, "error")
-  
-  })
-  
-  }, [])
+      .then(res => {
+        if (res.status === 200) {
+          console.log(res.data);
+          setEdge(res.data?.edgeInfo);
+          setNet(
+            res.data?.networkInfo.sort(function (a, b) {
+              return a.rcv_no - b.rcv_no;
+            }),
+          );
+          setRou(
+            res.data?.routerInfo.sort(function (a, b) {
+              return a.rcv_no - b.rcv_no;
+            }),
+          );
+          setSensor(
+            res.data?.sensorInfo.sort(function (a, b) {
+              return a.rcv_no - b.rcv_no;
+            }),
+          );
+          setServer(
+            res.data?.serverInfo.sort(function (a, b) {
+              return a.rcv_no - b.rcv_no;
+            }),
+          );
+        }
+      })
+      .catch(e => {
+        console.log(e, "error");
+      });
+  }, []);
 
-  const edgeList = [
-    {
-      name: "전체"
-    },
-    {
-      name:"곤지암 엣지센터"
-    },
-    {
-      name:"엣지2"
-    },
-    {
-      name:"엣지3"
-    }
-  ]
+  const edgeName = edge.map((a, i) => ({ name: edge[i]?.edge_name }));
+  const serverEdgeId = server.map((a, i) => ({ name: server[i]?.edge_id }));
+  const netEdgeId = net.map((a, i) => ({ name: net[i]?.edge_id }));
+  const rouEdgeId = rou.map((a, i) => ({ name: rou[i]?.edge_id }));
+  const sensorEdgeId = sensor.map((a, i) => ({ name: sensor[i]?.edge_id }));
 
-  // const edge2= [1]
-  // const server2= [1,2]
-  // const switch2= [1,2,3]
-  // const sensor2= [1,2,3,4,5,6,7,8,9]
-  
+  const edgeList = [{ name: "전체" }, ...edgeName];
+
+  const renderTableRows = data => {
+    const filteredData =
+      name === "전체" ? data : data.filter(item => item?.edge_name === name);
+    return filteredData.map((a, i) => (
+      <tr key={i}>
+        <td>{i + 1}</td>
+        <td>{a?.rcv_no || a?.idx}</td>
+        <td>{a?.facil_name || a?.edge_name}</td>
+      </tr>
+    ));
+  };
+
   const TopTable = (
-    
-    <Table striped bordered hover  onClick={(e)=>{console.log(e.target.innerHTML)}}>
+    <Table striped bordered hover>
       <thead>
         <tr>
           <th>순번</th>
@@ -65,63 +77,27 @@ const [name , setName] = useState([])
         </tr>
       </thead>
       <tbody>
-      {
-        title === "센터"?edge.map(function(a,i){
-          return(
-            <tr key={i}>
-              <td>{i+1}</td>
-              <td>{i+1}</td>
-              <td>{a?.edge_name}</td>
-            </tr>
-          )
-        }):title === "서버"?server.map(function(a,i){
-          return(
-            <tr key={i}>
-              <td>{i+1}</td>
-              <td>{i+1}</td>
-              <td>{a?.facil_name}</td>
-            </tr>
-          )
-        }):title === "스위치"?net.map(function(a,i){
-          return(
-            <tr key={i}>
-              <td>{i+1}</td>
-              <td>{i+1}</td>
-              <td>{a?.facil_name}</td>
-            </tr>
-          )
-        }):title === "라우터"?rou.map(function(a,i){
-          return(
-            <tr key={i}>
-              <td>{i+1}</td>
-              <td>{i+1}</td>
-              <td>{a?.facil_name}</td>
-            </tr>
-          )
-        }):title === "센서"?sensor.map(function(a,i){
-          return(
-            <tr key={i}>
-              <td>{i+1}</td>
-              <td>{i+1}</td>
-              <td>{a?.facil_name}</td>
-            </tr>
-          )
-        }):edge.map(function(a,i){
-          return(
-            <tr key={i}>
-              <td>{i+1}</td>
-              <td>{i+1}</td>
-              <td>{a?.edge_name}</td>
-            </tr>
-          )
-        })
-      }
+        {(() => {
+          switch (title) {
+            case "센터":
+              return renderTableRows(edge);
+            case "서버":
+              return renderTableRows(server);
+            case "스위치":
+              return renderTableRows(net);
+            case "라우터":
+              return renderTableRows(rou);
+            case "센서":
+              return renderTableRows(sensor);
+            default:
+              return renderTableRows(edge);
+          }
+        })()}
       </tbody>
     </Table>
-  )
-  
-  const botTable = (
+  );
 
+  const botTable = (
     <Table striped bordered hover>
       <thead>
         <tr>
@@ -129,70 +105,61 @@ const [name , setName] = useState([])
           <th></th>
         </tr>
       </thead>
-      <tbody>
-
-      {rouBot.title.map(function(j,k){
-          return(
-        <tr key={k}>
-          <td>{rouBot.title[k]}</td>
-          <td>{rouBot.rou1[k]}</td>
-        </tr>
-          )
-        })}
-      </tbody>
+      <tbody></tbody>
     </Table>
-  )
+  );
 
-const innerTabClick = (e) => {
-  console.log(e.target.innerHTML)
-  setName(e.target.innerHTML)
-}
+  const innerTabClick = e => {
+    console.log(e.target.innerHTML, "1111111111111111");
+    setName(e.target.innerHTML);
+  };
 
-const tableTabClick = (e) => {
-  console.log(e.target.innerHTML)
-  setTitle(e.target.innerHTML)
-}
+  const tableTabClick = e => {
+    console.log(e.target.innerHTML, "22222222222222222");
+    setTitle(e.target.innerHTML);
+  };
 
-const tabList = [
-  { value : "center", title : "센터"},
-  { value : "server", title : "서버"},
-  { value : "switch", title : "스위치"},
-  { value : "router", title : "라우터"},
-  { value : "sensor", title : "센서"}
-]
-  // 시설정보 tab01 
+  const tabList = [
+    { value: "center", title: "센터" },
+    { value: "server", title: "서버" },
+    { value: "switch", title: "스위치" },
+    { value: "router", title: "라우터" },
+    { value: "sensor", title: "센서" },
+  ];
+
+  // 시설정보 tab01
   return (
     <div className="App">
       <h3>시설정보</h3>
       <Tabs
-      defaultActiveKey="center"
-      id="uncontrolled-tab-example"
-      className="mb-3"
-      onClick={tableTabClick}
-    >
-      {tabList?.map((list,i) => 
-        <Tab eventKey={list.value} title={list.title}  value= {list.value}
-        >
-
-          <Tabs
-          defaultActiveKey="전체"
-          id="uncontrolled-tab-example"
-          className="mb-3"
-          onClick={innerTabClick}
+        defaultActiveKey="center"
+        id="uncontrolled-tab-example"
+        className="mb-3"
+        onClick={tableTabClick}
+      >
+        {tabList?.map((list, i) => (
+          <Tab
+            eventKey={list.value}
+            title={list.title}
+            value={list.value}
+            key={i}
           >
-
-          {edgeList?.map((edge,i) => 
-          <Tab eventKey={edge.name} title={edge.name}>
-            {TopTable}
-            <h3>상세시설정보</h3>
-            {botTable}
+            <Tabs
+              defaultActiveKey="전체"
+              id="uncontrolled-tab-example"
+              className="mb-3"
+              onClick={innerTabClick}
+            >
+              {edgeList?.map((edge, i) => (
+                <Tab eventKey={edge.name} title={edge.name} key={i}>
+                  {TopTable}
+                  <h3>상세시설정보</h3>
+                  {botTable}
+                </Tab>
+              ))}
+            </Tabs>
           </Tab>
-          )}
-
-          </Tabs>
-        </Tab>
-      )}
-
+        ))}
       </Tabs>
     </div>
   );

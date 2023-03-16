@@ -1,41 +1,37 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import React, {  useEffect, useState } from "react"
-import './App.css';
-import { Tab,Tabs,Table } from 'react-bootstrap';
-import Axios from "axios"
-import {rouBot} from './TableBotData';
+import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import { Tab, Tabs, Table } from "react-bootstrap";
+import Axios from "axios";
+import { rouBot } from "./TableBotData";
 
 function App() {
-
-const [data,setData] = useState([])
-const [edge,setEdge] = useState([])
-const [net,setNet] = useState([])
-const [rou,setRou] = useState([])
-const [sensor,setSensor] = useState([])
-const [server,setServer] = useState([])
+  const [data, setData] = useState([]);
+  const [edge, setEdge] = useState([]);
+  const [net, setNet] = useState([]);
+  const [rou, setRou] = useState([]);
+  const [sensor, setSensor] = useState([]);
+  const [server, setServer] = useState([]);
 
   useEffect(() => {
     Axios.get("/api/allFacilInfo")
-  .then((res) => {
-    if (res.status === 200) {
-      console.log(res.data)
-      setData(res.data)
-      setEdge(res.data?.edgeInfo)
-      setNet(res.data?.networkInfo)
-      setRou(res.data?.routerInfo)
-      setSensor(res.data?.sensorInfo)
-      setServer(res.data?.serverInfo)
-    }
-  
-  }).catch ((e) => {
-    console.log(e, "error")
-  
-  })
-  
-  }, [])
+      .then(res => {
+        if (res.status === 200) {
+          console.log(res.data);
+          setData(res.data);
+          setEdge(res.data?.edgeInfo);
+          setNet(res.data?.networkInfo);
+          setRou(res.data?.routerInfo);
+          setSensor(res.data?.sensorInfo);
+          setServer(res.data?.serverInfo);
+        }
+      })
+      .catch(e => {
+        console.log(e, "error");
+      });
+  }, []);
 
   const edgeTopTable = (
-    
     <Table striped bordered hover>
       <thead>
         <tr>
@@ -45,21 +41,19 @@ const [server,setServer] = useState([])
         </tr>
       </thead>
       <tbody>
-      {edge.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{i+1}</td>
-          <td>{a.edge_name}</td>
-        </tr>
-          )
+        {edge.map(function (a, i) {
+          return (
+            <tr key={i}>
+              <td>{i + 1}</td>
+              <td>{i + 1}</td>
+              <td>{a.edge_name}</td>
+            </tr>
+          );
         })}
       </tbody>
     </Table>
-  )
+  );
 
-
-  
   const gonEdge = (
     <Table striped bordered hover>
       <thead>
@@ -77,7 +71,7 @@ const [server,setServer] = useState([])
         </tr>
       </tbody>
     </Table>
-  )
+  );
   const Edge2 = (
     <Table striped bordered hover>
       <thead>
@@ -95,7 +89,7 @@ const [server,setServer] = useState([])
         </tr>
       </tbody>
     </Table>
-  )
+  );
   const Edge3 = (
     <Table striped bordered hover>
       <thead>
@@ -113,10 +107,9 @@ const [server,setServer] = useState([])
         </tr>
       </tbody>
     </Table>
-  )
+  );
 
   const serverTopTable = (
-    
     <Table striped bordered hover>
       <thead>
         <tr>
@@ -126,20 +119,19 @@ const [server,setServer] = useState([])
         </tr>
       </thead>
       <tbody>
-        {server.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{i+1}</td>
-          <td>{a.facil_name}</td>
-        </tr>
-          )
+        {server.map(function (a, i) {
+          return (
+            <tr key={i}>
+              <td>{i + 1}</td>
+              <td>{i + 1}</td>
+              <td>{a.facil_name}</td>
+            </tr>
+          );
         })}
       </tbody>
     </Table>
-  )
+  );
   const gonServer = (
-    
     <Table striped bordered hover>
       <thead>
         <tr>
@@ -161,9 +153,8 @@ const [server,setServer] = useState([])
         </tr>
       </tbody>
     </Table>
-  )
+  );
   const server2 = (
-    
     <Table striped bordered hover>
       <thead>
         <tr>
@@ -185,9 +176,8 @@ const [server,setServer] = useState([])
         </tr>
       </tbody>
     </Table>
-  )
+  );
   const server3 = (
-    
     <Table striped bordered hover>
       <thead>
         <tr>
@@ -209,9 +199,8 @@ const [server,setServer] = useState([])
         </tr>
       </tbody>
     </Table>
-  )
+  );
   const rouTopTable = (
-    
     <Table striped bordered hover>
       <thead>
         <tr>
@@ -221,22 +210,24 @@ const [server,setServer] = useState([])
         </tr>
       </thead>
       <tbody>
-      {rou.map(function(a,i){
-          return(
-        <tr key={i} onClick={()=>{
-          console.log(i+1)
-        }}>
-          <td>{i+1}</td>
-          <td>{i+1}</td>
-          <td>{a.facil_name}</td>
-        </tr>
-          )
+        {rou.map(function (a, i) {
+          return (
+            <tr
+              key={i}
+              onClick={() => {
+                console.log(i + 1);
+              }}
+            >
+              <td>{i + 1}</td>
+              <td>{i + 1}</td>
+              <td>{a.facil_name}</td>
+            </tr>
+          );
         })}
       </tbody>
     </Table>
-  )
+  );
   const gonRou = (
-    
     <Table striped bordered hover>
       <thead>
         <tr>
@@ -263,9 +254,8 @@ const [server,setServer] = useState([])
         </tr>
       </tbody>
     </Table>
-  )
+  );
   const Rou2 = (
-    
     <Table striped bordered hover>
       <thead>
         <tr>
@@ -292,9 +282,8 @@ const [server,setServer] = useState([])
         </tr>
       </tbody>
     </Table>
-  )
+  );
   const Rou3 = (
-    
     <Table striped bordered hover>
       <thead>
         <tr>
@@ -321,7 +310,7 @@ const [server,setServer] = useState([])
         </tr>
       </tbody>
     </Table>
-  )
+  );
   const netTopTable = (
     <Table striped bordered hover>
       <thead>
@@ -332,18 +321,18 @@ const [server,setServer] = useState([])
         </tr>
       </thead>
       <tbody>
-      {net.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{i+1}</td>
-          <td>{a.facil_name}</td>
-        </tr>
-          )
+        {net.map(function (a, i) {
+          return (
+            <tr key={i}>
+              <td>{i + 1}</td>
+              <td>{i + 1}</td>
+              <td>{a.facil_name}</td>
+            </tr>
+          );
         })}
       </tbody>
     </Table>
-  )
+  );
   const gonNet = (
     <Table striped bordered hover>
       <thead>
@@ -371,7 +360,7 @@ const [server,setServer] = useState([])
         </tr>
       </tbody>
     </Table>
-  )
+  );
   const Net2 = (
     <Table striped bordered hover>
       <thead>
@@ -399,7 +388,7 @@ const [server,setServer] = useState([])
         </tr>
       </tbody>
     </Table>
-  )
+  );
   const Net3 = (
     <Table striped bordered hover>
       <thead>
@@ -432,7 +421,7 @@ const [server,setServer] = useState([])
         </tr>
       </tbody>
     </Table>
-  )
+  );
   const senTopTable = (
     <Table striped bordered hover>
       <thead>
@@ -443,18 +432,18 @@ const [server,setServer] = useState([])
         </tr>
       </thead>
       <tbody>
-      {sensor.map(function(a,i){
-          return(
-        <tr key={i}>
-          <td>{i+1}</td>
-          <td>{a.rcv_info_no}</td>
-          <td>{a.facil_name}</td>
-        </tr>
-          )
+        {sensor.map(function (a, i) {
+          return (
+            <tr key={i}>
+              <td>{i + 1}</td>
+              <td>{a.rcv_info_no}</td>
+              <td>{a.facil_name}</td>
+            </tr>
+          );
         })}
       </tbody>
     </Table>
-  )
+  );
   const gonSen = (
     <Table striped bordered hover>
       <thead>
@@ -517,7 +506,7 @@ const [server,setServer] = useState([])
         </tr>
       </tbody>
     </Table>
-  )
+  );
   const sen2 = (
     <Table striped bordered hover>
       <thead>
@@ -575,7 +564,7 @@ const [server,setServer] = useState([])
         </tr>
       </tbody>
     </Table>
-  )
+  );
   const sen3 = (
     <Table striped bordered hover>
       <thead>
@@ -633,10 +622,9 @@ const [server,setServer] = useState([])
         </tr>
       </tbody>
     </Table>
-  )
+  );
 
   let rouBotTable = (
-
     <Table striped bordered hover>
       <thead>
         <tr>
@@ -645,94 +633,81 @@ const [server,setServer] = useState([])
         </tr>
       </thead>
       <tbody>
-
-      {rouBot.title.map(function(j,k){
-          return(
-        <tr key={k}>
-          <td>{rouBot.title[k]}</td>
-          {/* <td>{rouBot.{`rou${k+1}`[k]}}</td> */}
-          <td>{rouBot.rou1[k]}</td>
-        </tr>
-          )
+        {rouBot.title.map(function (j, k) {
+          return (
+            <tr key={k}>
+              <td>{rouBot.title[k]}</td>
+              {/* <td>{rouBot.{`rou${k+1}`[k]}}</td> */}
+              <td>{rouBot.rou1[k]}</td>
+            </tr>
+          );
         })}
       </tbody>
     </Table>
-  )
+  );
 
   const edgeInnerTab = (
-    <Tabs
-    defaultActiveKey="all"
-    id="uncontrolled-tab-example"
-    className="mb-3">
+    <Tabs defaultActiveKey="all" id="uncontrolled-tab-example" className="mb-3">
       <Tab eventKey="all" title="전체">
         {edgeTopTable}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
       </Tab>
       <Tab eventKey="gonziam" title="곤지암 엣지센터">
         {gonEdge}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
       </Tab>
       <Tab eventKey="edge2" title="엣지센터2">
         {Edge2}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
       </Tab>
       <Tab eventKey="edge3" title="엣지센터3">
         {Edge3}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
       </Tab>
     </Tabs>
   );
   const serverInnerTab = (
-    <Tabs
-    defaultActiveKey="all"
-    id="uncontrolled-tab-example"
-    className="mb-3">
+    <Tabs defaultActiveKey="all" id="uncontrolled-tab-example" className="mb-3">
       <Tab eventKey="all" title="전체">
         {serverTopTable}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
       </Tab>
       <Tab eventKey="gonziam" title="곤지암 엣지센터">
         {gonServer}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
       </Tab>
       <Tab eventKey="edge2" title="엣지센터2">
         {server2}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
       </Tab>
       <Tab eventKey="edge3" title="엣지센터3">
         {server3}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
       </Tab>
     </Tabs>
   );
   const netInnerTab = (
-    <Tabs
-    defaultActiveKey="all"
-    id="uncontrolled-tab-example"
-    className="mb-3">
+    <Tabs defaultActiveKey="all" id="uncontrolled-tab-example" className="mb-3">
       <Tab eventKey="all" title="전체">
         {netTopTable}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
       </Tab>
       <Tab eventKey="gonziam" title="곤지암 엣지센터">
         {gonNet}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
       </Tab>
       <Tab eventKey="edge2" title="엣지센터2">
         {Net2}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
       </Tab>
       <Tab eventKey="edge3" title="엣지센터3">
         {Net3}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
       </Tab>
     </Tabs>
   );
   const rouInnerTab = (
-    <Tabs
-    defaultActiveKey="all"
-    id="uncontrolled-tab-example"
-    className="mb-3">
+    <Tabs defaultActiveKey="all" id="uncontrolled-tab-example" className="mb-3">
       <Tab eventKey="all" title="전체">
         {rouTopTable}
         <h3>시설상세정보</h3>
@@ -740,54 +715,51 @@ const [server,setServer] = useState([])
       </Tab>
       <Tab eventKey="gonziam" title="곤지암 엣지센터">
         {gonRou}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
         {rouBotTable}
       </Tab>
       <Tab eventKey="edge2" title="엣지센터2">
         {Rou2}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
         {rouBotTable}
       </Tab>
       <Tab eventKey="edge3" title="엣지센터3">
         {Rou3}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
         {rouBotTable}
       </Tab>
     </Tabs>
   );
   const sensorInnerTab = (
-    <Tabs
-    defaultActiveKey="all"
-    id="uncontrolled-tab-example"
-    className="mb-3">
+    <Tabs defaultActiveKey="all" id="uncontrolled-tab-example" className="mb-3">
       <Tab eventKey="all" title="전체">
         {senTopTable}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
       </Tab>
       <Tab eventKey="gonziam" title="곤지암 엣지센터">
         {gonSen}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
       </Tab>
       <Tab eventKey="edge2" title="엣지센터2">
         {sen2}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
       </Tab>
       <Tab eventKey="edge3" title="엣지센터3">
         {sen3}
-          <h3>시설상세정보</h3>
+        <h3>시설상세정보</h3>
       </Tab>
     </Tabs>
   );
-  
 
-  // 시설정보 tab01 
+  // 시설정보 tab01
   return (
     <div className="App">
       <h3>시설정보</h3>
       <Tabs
-      defaultActiveKey="center"
-      id="uncontrolled-tab-example"
-      className="mb-3">
+        defaultActiveKey="center"
+        id="uncontrolled-tab-example"
+        className="mb-3"
+      >
         <Tab eventKey="center" title="센터">
           {edgeInnerTab}
         </Tab>
