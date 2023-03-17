@@ -6,7 +6,6 @@ import Axios from "axios";
 import Item from "antd/es/list/Item";
 
 function App() {
-  const [data, setData] = useState([]);
   const [edge, setEdge] = useState([]);
   const [net, setNet] = useState([]);
   const [rou, setRou] = useState([]);
@@ -21,7 +20,6 @@ function App() {
       .then(res => {
         if (res.status === 200) {
           console.log(res.data);
-          setData(res.data);
           setEdge(res.data?.edgeInfo);
           setNet(
             res.data?.networkInfo.sort(function (a, b) {
@@ -61,23 +59,23 @@ function App() {
   const edgeList = [{ name: "전체" }, ...edgeName];
 
   const renderTableRows = data => {
-    // console.log(data);
+    console.log(data);
     let filteredDataArr = [];
     const filteredData =
       name === "전체"
         ? (filteredDataArr = data)
         : data?.map(item => {
-            // console.log(item);
-            // console.log(item.edge_id);
+            console.log(item);
+            console.log(item.edge_id);
             if (item.edge_id === 1) {
-              // console.log(item);
+              console.log(item);
               filteredDataArr.push(item);
             } else if (item.edge_id === 2) {
               filteredDataArr.push(item);
             } else if (item.edge_id === 3) {
               filteredDataArr.push(item);
             }
-            // console.log(filteredDataArr);
+            console.log(filteredDataArr);
           });
 
     return filteredDataArr.map((a, i) => {
@@ -138,8 +136,8 @@ function App() {
     setTitle(e.target.innerHTML);
   };
 
-  const innerTabClick = (e, item) => {
-    console.log(item, "22222222");
+  const innerTabClick = (e, edge) => {
+    console.log(e.target.id, "22222222");
     setName(e.target.innerHTML);
   };
 
@@ -170,23 +168,32 @@ function App() {
             // onClick={e => {
             //   tableTabClick(e, list);
             // }}
-          ></Tab>
+          >
+            <Tabs
+              defaultActiveKey="전체"
+              id="uncontrolled-tab-example"
+              className="mb-3"
+              onClick={innerTabClick}
+            >
+              {edgeList?.map((edge, i) => (
+                <Tab
+                  eventKey={edge.name}
+                  title={edge.name}
+                  value={i.edge_id}
+                  key={i}
+                  // onClick={e => {
+                  //   innerTabClick(e, edge);
+                  // }}
+                >
+                  {TopTable}
+                  <h3>상세시설정보</h3>
+                  {botTable}
+                </Tab>
+              ))}
+            </Tabs>
+          </Tab>
         ))}
       </Tabs>
-
-      <button>전체</button>
-
-      {edge?.map((item, i) => (
-        <button
-          id={item?.edge_id}
-          onClick={e => {
-            innerTabClick(e, item);
-          }}
-        >
-          {item.edge_name}
-        </button>
-      ))}
-      {TopTable}
     </div>
   );
 }
